@@ -279,6 +279,34 @@ function renderJogo(container) {
         from { transform:translateY(-20px); opacity:0; }
         to   { transform:translateY(0);     opacity:1; }
       }
+      
+      @media (max-width: 480px) {
+        #hud-container {
+          padding: 8px 10px 14px !important;
+        }
+        #hud-aposta, #hud-meta-label {
+          font-size: 13px !important;
+        }
+        #hud-acumulado {
+          font-size: 16px !important;
+        }
+        #hud-meta {
+          font-size: 12px !important;
+        }
+        #hud-plat {
+          font-size: 9px !important;
+          margin-top: 2px !important;
+        }
+        #btn-resgatar {
+          bottom: 74px !important;
+          font-size: 15px !important;
+          padding: 12px 24px !important;
+        }
+        #btn-resgatar-hint {
+          bottom: 50px !important;
+          font-size: 9px !important;
+        }
+      }
     </style>
   `;
 
