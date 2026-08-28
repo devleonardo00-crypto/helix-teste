@@ -17,7 +17,7 @@
       height: 100%;
       overflow: hidden;
       font-family: 'Arial', sans-serif;
-      background: #FFE4EE;
+      background: #090812;
     }
 
     #game-container {
@@ -28,8 +28,7 @@
       height: 100%;
       touch-action: none;
       -webkit-tap-highlight-color: transparent;
-       background: url('bg.jpg') no-repeat center center !important;
-       background-size: cover !important;
+      background: radial-gradient(circle at 50% 30%, #1a102f 0%, #090812 100%) !important;
       opacity: 1 !important;
     }
 
@@ -37,11 +36,7 @@
       display: block;
       width: 100%;
       height: 100%;
-      background: 
-    linear-gradient(rgba(0,0,0,0.9), rgba(0,0,0,0.9)),
-    url('bg.jpg') no-repeat center center !important;
-
-  background-size: cover !important;
+      background: transparent !important;
       opacity: 1 !important;
     }
 
@@ -55,63 +50,7 @@
     }
 
     #start-screen {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      background: rgba(10, 4, 22, 0.45);
-      pointer-events: auto;
-      z-index: 10;
-      overflow: hidden;
-      cursor: pointer;
-      user-select: none;
-      -webkit-user-select: none;
-    }
-
-    #start-screen.hidden { display: none; }
-
-    #start-screen::before {
-      content: '';
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      height: 50%;
-      background: linear-gradient(to top, rgba(10,4,22,.3) 0%, transparent 100%);
-      pointer-events: none;
-    }
-
-    #start-screen p {
-      font-size: 30px;
-      font-weight: 900;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: #fff;
-      text-shadow:
-        0 0 12px rgba(232,60,160,.9),
-        0 0 30px rgba(232,60,160,.5),
-        0 2px 8px rgba(0,0,0,.6);
-      margin-bottom: 12px;
-      text-align: center;
-      animation: glow-title 2.2s ease-in-out infinite;
-    }
-
-    @keyframes glow-title {
-      0%, 100% { text-shadow: 0 0 10px rgba(232,60,160,.7), 0 0 24px rgba(232,60,160,.35), 0 2px 8px rgba(0,0,0,.6); }
-      50%       { text-shadow: 0 0 22px rgba(232,60,160,1),  0 0 55px rgba(168,85,247,.6),  0 2px 8px rgba(0,0,0,.6); }
-    }
-
-    #start-screen .arrow {
-      font-size: 28px;
-      color: rgba(255,255,255,.75);
-      text-shadow: 0 0 12px rgba(232,60,160,.8);
-      animation: bounce-arrow 1.4s ease-in-out infinite;
-    }
-
-    @keyframes bounce-arrow {
-      0%, 100% { transform: translateY(0);    opacity: .6; }
-      50%       { transform: translateY(10px); opacity: 1;  }
+      display: none !important;
     }
 
     #score {
@@ -122,9 +61,10 @@
       transform: translateX(-50%);
       font-size: 64px;
       font-weight: bold;
-      color: #1a1a2e;
+      color: #ffffff;
       white-space: nowrap;
       pointer-events: none;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.5);
     }
 
     #idle-hint {
@@ -133,9 +73,10 @@
       left: 50%;
       transform: translateX(-50%);
       font-size: 18px;
-      color: rgba(26, 26, 46, 0.45);
+      color: rgba(255, 255, 255, 0.65);
       display: none;
       pointer-events: none;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.8);
     }
 
     #idle-hint.visible {
@@ -153,9 +94,10 @@
       top: 96px;
       left: 50%;
       transform: translateX(-50%);
-      font-size: 20px;
-      font-weight: bold;
-      color: #e91e63;
+      font-size: 22px;
+      font-weight: 800;
+      color: #FF007A;
+      text-shadow: 0 0 12px rgba(255,0,122,0.6);
       display: none;
       pointer-events: none;
     }
@@ -170,7 +112,8 @@
       transform: translateX(-50%);
       font-size: 38px;
       font-weight: bold;
-      color: #1a1a2e;
+      color: #00E676;
+      text-shadow: 0 0 10px rgba(0,230,118,0.6);
       pointer-events: none;
       opacity: 0;
       display: none;
@@ -188,10 +131,11 @@
       text-align: center;
       display: none;
       pointer-events: none;
-      background: rgba(255, 255, 255, 0.93);
+      background: rgba(18, 12, 38, 0.96);
       padding: 36px 52px;
       border-radius: 20px;
-      box-shadow: 0 4px 32px rgba(0, 0, 0, 0.12);
+      box-shadow: 0 8px 40px rgba(0, 0, 0, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.15);
     }
 
     #game-over.visible {
@@ -201,13 +145,13 @@
 
     #game-over h2 {
       margin-bottom: 16px;
-      color: #1a1a2e;
+      color: #fff;
       font-size: 30px;
     }
 
     #game-over p {
       margin-bottom: 8px;
-      color: #555;
+      color: #ccc;
       font-size: 18px;
     }
 
@@ -217,26 +161,32 @@
       font-size: 18px;
       font-weight: bold;
       color: white;
-      background: #e91e63;
+      background: linear-gradient(135deg, #FF007A, #7928CA);
       border: none;
-      border-radius: 10px;
+      border-radius: 12px;
       cursor: pointer;
       font-family: Arial, sans-serif;
-      transition: background 0.2s;
+      transition: opacity 0.2s, transform 0.2s;
     }
 
     #game-over .restart-btn:hover {
-      background: #c2185b;
+      opacity: 0.9;
+      transform: scale(1.03);
     }
-
   </style>
-  <script type="module" crossorigin="" src="js/index-O5Ori94R.js"></script>
+
+  <script>
+    window.addEventListener('error', function(e) {
+      console.error('[Helix 3D Error]', e.message, e.filename, e.lineno, e.error);
+    });
+  </script>
+  <script src="js/index-O5Ori94R.js?v=3.1.2"></script>
 </head>
 <body>
   <div id="game-container">
     <canvas id="canvas"></canvas>
     <div id="ui-overlay">
-      <div id="start-screen">
+      <div id="start-screen" style="display: none !important;">
         <p>Toque para jogar</p>
         <span class="arrow">↓</span>
       </div>
@@ -254,4 +204,47 @@
   </div>
 
 
+  <div id="debug-console" style="position:fixed;bottom:0;left:0;right:0;height:140px;background:rgba(10,5,22,0.92);color:#00ff88;font-family:monospace;font-size:11px;overflow-y:auto;z-index:999999;pointer-events:auto;border-top:2px solid #ff007a;padding:10px;box-sizing:border-box;">
+    <div style="font-weight:bold;color:#fff;border-bottom:1px solid #333;padding-bottom:4px;margin-bottom:6px">📋 SISTEMA DE DIAGNÓSTICO HELIX 3D</div>
+  </div>
+
+  <script>
+    (function() {
+      var consoleDiv = document.getElementById('debug-console');
+      function logToScreen(type, args) {
+        if (consoleDiv) {
+          var msg = Array.prototype.slice.call(args).map(function(arg) {
+            try {
+              return typeof arg === 'object' ? JSON.stringify(arg) : String(arg);
+            } catch(e) { return String(arg); }
+          }).join(' ');
+          var color = type === 'error' ? '#ff4f4f' : (type === 'warn' ? '#ffaa00' : '#00ff88');
+          var time = new Date().toTimeString().split(' ')[0];
+          consoleDiv.innerHTML += '<div style="color:' + color + ';margin-bottom:3px">[' + time + '] [' + type.toUpperCase() + '] ' + msg + '</div>';
+          consoleDiv.scrollTop = consoleDiv.scrollHeight;
+        }
+      }
+      var orgLog = console.log;
+      console.log = function() {
+        orgLog.apply(console, arguments);
+        logToScreen('log', arguments);
+      };
+      var orgError = console.error;
+      console.error = function() {
+        orgError.apply(console, arguments);
+        logToScreen('error', arguments);
+      };
+      var orgWarn = console.warn;
+      console.warn = function() {
+        orgWarn.apply(console, arguments);
+        logToScreen('warn', arguments);
+      };
+      window.addEventListener('error', function(e) {
+        logToScreen('error', [e.message, 'em', e.filename, 'linha', e.lineno]);
+      });
+      window.addEventListener('unhandledrejection', function(e) {
+        logToScreen('error', ['Promise Rejeitada:', e.reason]);
+      });
+    })();
+  </script>
 </body></html>

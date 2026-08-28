@@ -3,9 +3,10 @@ function renderLanding(el) {
   el.innerHTML = `
     <!-- ── Navbar ────────────────────────────────────────────────────── -->
     <nav class="lnd-nav">
-      <div class="lnd-nav-brand brand-logo-wrap">
+      <div class="lnd-nav-brand brand-logo-wrap" onclick="navigate('#landing')">
         <img class="brand-logo-img" src="" alt="logo" style="display:none;height:50px;object-fit:contain"/>
-        
+        <div class="brand-logo-icon" style="font-size:22px;margin-right:8px">🌀</div>
+        <span class="brand-name">HelixWin</span>
       </div>
       <div class="lnd-nav-menu">
         <button class="lnd-nav-link" onclick="navigate('#login')">Entrar</button>
@@ -16,152 +17,125 @@ function renderLanding(el) {
     <!-- ── Hero ──────────────────────────────────────────────────────── -->
     <div class="lnd-hero">
       <canvas id="lnd-particles" aria-hidden="true"></canvas>
-      <div class="lnd-orbs" aria-hidden="true">
-        <div class="lnd-orb" style="width:500px;height:500px;top:-160px;left:-160px;background:rgba(120,0,200,0.16)"></div>
-        <div class="lnd-orb" style="width:360px;height:360px;bottom:4%;right:-90px;background:rgba(255,50,110,0.11);animation-delay:2.5s"></div>
-        <div class="lnd-orb" style="width:260px;height:260px;top:38%;left:36%;background:rgba(0,200,122,0.07);animation-delay:5s"></div>
-      </div>
 
-      <div class="lnd-hero-inner">
-        <!-- Conteúdo principal -->
-        <div class="lnd-hero-left anim-slide">
-          <div class="lnd-live-badge">
-            <span class="lnd-live-dot"></span>
-            2.847 jogadores online agora
+      <div class="lnd-hero-main-wrap">
+        <div class="lnd-hero-inner">
+          <!-- Coluna Esquerda: Copy & CTA -->
+          <div class="lnd-hero-left anim-slide">
+            <div class="lnd-live-badge">
+              <span class="lnd-badge-icon">⚡</span>
+              <span>ENTRE NO JOGO</span>
+            </div>
+
+            <h1 class="lnd-title">
+              DINHEIRO<br><span class="yellow-text">FÁCIL</span>
+            </h1>
+
+            <div class="lnd-sub-headline">
+              JOGUE. <span class="yellow-text">GANHE.</span> SAQUE.
+            </div>
+
+            <p class="lnd-sub">
+              Faça sua jogada no <span class="purple-text">Helix Jump</span><br>
+              e, se ganhar, saque via <span class="green-text">PIX.</span>
+            </p>
+
+            <div class="lnd-actions-block">
+              <button class="lnd-cta-btn" id="btn-jogar-gratis" onclick="iniciarDemoJogo()">
+                <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+                <span id="btn-jogar-label">JOGAR AGORA</span>
+              </button>
+              
+              <div class="lnd-microcopy">
+                <span class="micro-item"><span class="micro-diamond">❖</span> Depósito via <strong>PIX</strong></span>
+                <span class="micro-sep">|</span>
+                <span class="micro-item"><span class="micro-diamond">❖</span> Saque via <strong>PIX</strong></span>
+              </div>
+            </div>
           </div>
 
-         <!-- Fonte (coloque no <head> do site) -->
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
-
-<!-- TÍTULO -->
-<h1 class="lnd-title lnd-title-copa">
-  <span class="lnd-title-line"><span class="lnd-t-w">GIRE E</span></span>
-  <span class="lnd-title-line"><span class="lnd-t-g">CONQUISTE</span></span>
-  <span class="lnd-title-line"><span class="lnd-t-gn">O TROFÉU</span></span>
-</h1>
-
-<!-- CSS -->
-<style>
-.lnd-title-copa {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 75px;
-  line-height: 1.1;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-}
-
-/* quebra de linha */
-.lnd-title-copa .lnd-title-line {
-  display: block;
-}
-
-/* cores simples (sem efeito) */
-.lnd-title-copa .lnd-t-w {
-  color: #eaeaea;
-}
-
-.lnd-title-copa .lnd-t-g {
-  color: #ffcc00;
-}
-
-.lnd-title-copa .lnd-t-gn {
-  color: #39ff88;
-}
-</style>
-
-         <style>
-  .lnd-sub {
-    font-size: 16px;
-    color: #ffffff;
-    line-height: 1.5;
-  }
-
-  .destaque {
-    color: #ffcc00; /* amarelo */
-    font-weight: bold;
-   
-  }
-</style>
-
-<p class="lnd-sub">
-  Entre no clima da <span class="destaque">Copa</span> com Helix Jump e ganhe jogando.
-  transforme habilidade em prêmio 
-  <span class="destaque">Saque via PIX quando quiser!</span>
-</p>
-
-          <div class="brand-promo" style="display:none;margin-bottom:12px;background:linear-gradient(135deg,rgba(34,197,94,.15),rgba(16,185,129,.1));border:1px solid rgba(34,197,94,.3);border-radius:10px;padding:10px 16px;font-size:14px;font-weight:600;color:#4ade80;text-align:center"></div>
-
-          <div class="lnd-actions">
-            <button class="lnd-cta-btn" id="btn-jogar-gratis">
-              <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-              <span id="btn-jogar-label">JOGAR AGORA</span>
-            </button>
-            <button class="lnd-ghost-btn" onclick="navigate('#login')">Já tenho conta &rarr;</button>
+          <!-- Coluna Direita: Widget ÚLTIMOS GANHOS -->
+          <div class="lnd-hero-right anim-slide">
+            <div class="lnd-wins-widget">
+              <div class="lnd-wins-header">
+                <span class="wins-trophy">🏆</span>
+                <span>ÚLTIMOS GANHOS</span>
+              </div>
+              <div class="lnd-wins-list">
+                <div class="lnd-win-item">
+                  <div class="lnd-win-avatar av-purple">C</div>
+                  <div class="lnd-win-details">
+                    <span class="lnd-win-user">Carlos ganhou</span>
+                    <span class="lnd-win-val">R$ 70,00</span>
+                    <span class="lnd-win-time">há 2 minutos</span>
+                  </div>
+                  <div class="lnd-win-star">★</div>
+                </div>
+                <div class="lnd-win-item">
+                  <div class="lnd-win-avatar av-blue">A</div>
+                  <div class="lnd-win-details">
+                    <span class="lnd-win-user">Ana ganhou</span>
+                    <span class="lnd-win-val">R$ 45,00</span>
+                    <span class="lnd-win-time">há 5 minutos</span>
+                  </div>
+                  <div class="lnd-win-star">★</div>
+                </div>
+                <div class="lnd-win-item">
+                  <div class="lnd-win-avatar av-orange">L</div>
+                  <div class="lnd-win-details">
+                    <span class="lnd-win-user">Lucas ganhou</span>
+                    <span class="lnd-win-val">R$ 14,00</span>
+                    <span class="lnd-win-time">há 8 minutos</span>
+                  </div>
+                  <div class="lnd-win-star">★</div>
+                </div>
+              </div>
+            </div>
           </div>
-
-          <div class="lnd-trust">
-            <span class="lnd-trust-item">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><polyline points="20 6 9 17 4 12"/></svg>
-              Saque via PIX
-            </span>
-            <span class="lnd-trust-item">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><polyline points="20 6 9 17 4 12"/></svg>
-              Depósito mín. <span id="lnd-dep-min">R$10</span>
-            </span>
-            <span class="lnd-trust-item">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><polyline points="20 6 9 17 4 12"/></svg>
-              Resultado na hora
-            </span>
-          </div>
-
-          <!-- Taça exclusiva MOBILE (abaixo dos trust badges) -->
-          <div class="lnd-trophy-mobile">
-            <img class="lnd-trophy-svg-mob" src="https://i.ibb.co/cKmwyfP3/World-Cup.png" alt="Taça"/>
-            <div class="lnd-trophy-glow-mob"></div>
-          </div>
-
         </div>
 
-        <!-- Coluna direita: taça + notificações -->
-        <div class="lnd-right-col">
-
-          <!-- Taça posicionada no topo direito -->
-          <div class="lnd-trophy-wrap">
-            <img class="lnd-trophy-svg" src="https://i.ibb.co/cKmwyfP3/World-Cup.png" alt="Taça"/>
-            <div class="lnd-trophy-glow"></div>
+        <!-- Barra Inferior de Benefícios e Segurança (4 cards) -->
+        <div class="lnd-bottom-bar">
+          <div class="lnd-bottom-card">
+            <div class="lnd-bcard-icon icon-purple">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            </div>
+            <div class="lnd-bcard-text">
+              <div class="bcard-title">COMECE AGORA</div>
+              <div class="bcard-desc">Rápido e simples</div>
+            </div>
           </div>
 
-        <!-- Notificações de ganhos flutuantes -->
-        <div class="lnd-wins-col">
-          <div class="lnd-win-card" style="animation-delay:0s">
-            <div class="lnd-win-avatar" style="background:linear-gradient(135deg,#e8c547,#FF8CC8)">C</div>
-            <div class="lnd-win-info">
-              <div class="lnd-win-name">Carlos ganhou</div>
-              <div class="lnd-win-amount">+R$ 70,00</div>
-              <div class="lnd-win-label">há 2 minutos</div>
+          <div class="lnd-bottom-card">
+            <div class="lnd-bcard-icon icon-purple">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
             </div>
-            <svg viewBox="0 0 24 24" fill="#FFB800" width="22" height="22"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/></svg>
+            <div class="lnd-bcard-text">
+              <div class="bcard-title">DEPÓSITO VIA <span class="green-text">PIX</span></div>
+              <div class="bcard-desc">Liberação imediata</div>
+            </div>
           </div>
-          <div class="lnd-win-card" style="animation-delay:1.4s">
-            <div class="lnd-win-avatar" style="background:linear-gradient(135deg,#4D9EFF,#00C97A)">A</div>
-            <div class="lnd-win-info">
-              <div class="lnd-win-name">Ana ganhou</div>
-              <div class="lnd-win-amount">+R$ 45,00</div>
-              <div class="lnd-win-label">há 5 minutos</div>
+
+          <div class="lnd-bottom-card">
+            <div class="lnd-bcard-icon icon-green">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
             </div>
-            <svg viewBox="0 0 24 24" fill="#FFB800" width="22" height="22"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/></svg>
+            <div class="lnd-bcard-text">
+              <div class="bcard-title">SAQUE VIA <span class="green-text">PIX</span></div>
+              <div class="bcard-desc">Quando quiser</div>
+            </div>
           </div>
-          <div class="lnd-win-card" style="animation-delay:2.8s">
-            <div class="lnd-win-avatar" style="background:linear-gradient(135deg,#FFB800,#FF8C42)">L</div>
-            <div class="lnd-win-info">
-              <div class="lnd-win-name">Lucas ganhou</div>
-              <div class="lnd-win-amount">+R$ 14,00</div>
-              <div class="lnd-win-label">há 8 minutos</div>
+
+          <div class="lnd-bottom-card lnd-bcard-security">
+            <div class="lnd-bcard-icon icon-purple">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
             </div>
-            <svg viewBox="0 0 24 24" fill="#FFB800" width="22" height="22"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/></svg>
+            <div class="lnd-bcard-text">
+              <div class="bcard-title">Ambiente seguro, rápido e justo.</div>
+              <div class="bcard-desc">Seu jogo. Suas regras. <span class="yellow-text" style="font-weight:800;">Seus ganhos.</span></div>
+            </div>
           </div>
         </div>
-        </div> <!-- /lnd-right-col -->
       </div>
     </div>
 
@@ -339,18 +313,6 @@ function renderLanding(el) {
           .toLocaleString('pt-BR', { minimumFractionDigits: 0, maximumFractionDigits: 2 });
       }
 
-      // Modo Demo desabilitado → esconde botão de jogar grátis e redireciona para cadastro
-      const btnJogar  = document.getElementById('btn-jogar-gratis');
-      const btnLabel  = document.getElementById('btn-jogar-label');
-      if (cfg.demo_mode === false || cfg.demo_mode === '0') {
-        if (btnLabel) btnLabel.textContent = 'CRIAR CONTA';
-        if (btnJogar) {
-          btnJogar.onclick = () => navigate('#cadastro');
-        }
-      } else {
-        if (btnLabel) btnLabel.textContent = 'JOGAR GRÁTIS';
-      }
-
       // Registro fechado → esconde botões de cadastro
       if (cfg.registro_aberto === false || cfg.registro_aberto === '0') {
         document.querySelectorAll('[onclick*="cadastro"], [onclick*="register"]').forEach(el => {
@@ -366,13 +328,8 @@ function renderLanding(el) {
       }
     });
 
-  // ── Botão principal JOGAR ──────────────────────────────────────────────────
-  document.getElementById('btn-jogar-gratis').addEventListener('click', function(e) {
-    // Se onclick foi sobrescrito pelo bloco acima (demo_mode=false), não entra aqui
-    const btn = e.currentTarget;
-    if (btn.onclick) return; // já tem handler customizado
-
-    btn.disabled = true;
+  // ── Função para Iniciar Jogo Demo ──────────────────────────────────────────
+  function iniciarDemoJogo() {
     sessionStorage.setItem('partida_atual', JSON.stringify({
       partida_id:           'demo',
       valor_entrada:        5,
@@ -382,8 +339,13 @@ function renderLanding(el) {
       modo_demo:            true,
     }));
     navigate('#jogo');
-    btn.disabled = false;
-  });
+  }
+  window.iniciarDemoJogo = iniciarDemoJogo;
+
+  const btnJogar = document.getElementById('btn-jogar-gratis');
+  if (btnJogar) {
+    btnJogar.onclick = iniciarDemoJogo;
+  }
 
   // ── Partículas de bolinhas no fundo ────────────────────────────────────────
   (function initParticles() {

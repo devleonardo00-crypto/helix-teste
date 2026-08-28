@@ -4,7 +4,7 @@ function renderPainel(el) {
   const inicial = (user.nome || 'U').charAt(0).toUpperCase();
 
   el.innerHTML = `
-    <div class="pnl-root">
+    <div class="pnl-root" id="pnl-root-main" style="opacity:0">
 
       <!-- ══ HEADER ══════════════════════════════════════════════════════ -->
       <header class="pnl-header">
@@ -511,7 +511,7 @@ function renderPainel(el) {
       .pnl-root::before {
         content: '';
         position: absolute; inset: 0; z-index: 0;
-        background: url('/img/game-bg-v2.png') center center / cover no-repeat;
+        background: url('images/game-bg.png') center center / cover no-repeat;
         opacity: 0.28;
         pointer-events: none;
       }
@@ -1180,10 +1180,12 @@ function renderPainel(el) {
   let multGlobal      = 7;
 
   // ── Carregar configs do jogo (multiplicador, taxa por plataforma) ────────
-  async function loadGameConfigs() {
+  async function loadGameConfigs(cfg = null, pubCfg = null) {
     try {
       // Carrega config pública para checar demo_mode e manutencao
-      const pubCfg = await fetch('/api/public/config?_=' + Date.now()).then(r => r.json()).catch(() => ({}));
+      if (!pubCfg) {
+        pubCfg = await getPublicConfig(false);
+      }
 
       // Nome da plataforma
       if (pubCfg.site_nome) {
@@ -1205,7 +1207,9 @@ function renderPainel(el) {
       const demoWrap = document.querySelector('.demo-btn-wrap,[data-demo-toggle]');
       if (demoWrap) demoWrap.style.display = pubCfg.demo_mode === false ? 'none' : '';
 
-      const cfg = await API.gameConfigs();
+      if (!cfg) {
+        cfg = await API.gameConfigs();
+      }
       taxaGlobal = parseFloat(cfg.taxa_por_plataforma) || taxaGlobal;
       multGlobal = parseFloat(cfg.multiplicador)       || multGlobal;
 
@@ -1239,9 +1243,11 @@ function renderPainel(el) {
   }
 
   // ── Carregar dashboard ───────────────────────────────────────────────────
-  async function loadDashboard() {
+  async function loadDashboard(data = null) {
     try {
-      const data = await API.dashboard();
+      if (!data) {
+        data = await API.dashboard();
+      }
       currentSaldo = parseFloat(data.saldo) || 0;
 
       document.getElementById('saldo-badge').textContent  = formatMoney(currentSaldo);
@@ -2285,8 +2291,7 @@ function renderPainel(el) {
     });
 
     // Load banners from public config
-    fetch('/api/public/config?_=' + Date.now())
-      .then(r => r.json())
+    getPublicConfig(false)
       .then(cfg => {
         const list = cfg.banners && cfg.banners.length ? cfg.banners : (cfg.banner_url ? [{ url: cfg.banner_url, link: cfg.banner_link || '' }] : []);
         renderBanners(list);
@@ -2294,8 +2299,41 @@ function renderPainel(el) {
       .catch(() => {});
   })();
 
-  // ── Boot ─────────────────────────────────────────────────────────────────
-  updateMetaPreview();
-  loadDashboard();
-  loadGameConfigs();
+  // ── Boot Coordenado e Paralelo ───────────────────────────────────────────
+  async function initBoot() {
+    const rootEl = document.getElementById('pnl-root-main');
+    if (rootEl) {
+      rootEl.style.transition = 'opacity 0.2s ease-in-out';
+      rootEl.style.opacity = '0';
+    }
+
+    try {
+      // Dispara as requisições críticas necessárias em paralelo
+      const [dashData, gameCfg, pubCfg] = await Promise.all([
+        API.dashboard().catch(() => ({})),
+        API.gameConfigs().catch(() => ({})),
+        getPublicConfig(false).catch(() => ({}))
+      ]);
+
+      // Popula a interface usando os dados já cacheados
+      await loadGameConfigs(gameCfg, pubCfg);
+      await loadDashboard(dashData);
+      updateMetaPreview();
+
+      // Exibe a tela inteira, pronta e configurada!
+      if (rootEl) {
+        rootEl.style.opacity = '1';
+      }
+
+      // Carrega dados secundários (não críticos) em segundo plano
+      loadHistorico();
+
+    } catch (e) {
+      if (rootEl) rootEl.style.opacity = '1';
+      showToast('Erro ao inicializar o painel.', 'error');
+    }
+  }
+
+  // Executa inicialização
+  initBoot();
 }
