@@ -1,7 +1,23 @@
 // ─── Cadastro Page ────────────────────────────────────────────────────────────
 function renderCadastro(el) {
+  // Lê o código de indicação com fallback em cascata:
+  // 1. sessionStorage (salvo pelo landing.js ou app.js)
+  // 2. localStorage   (salvo pelo app.js — sobrevive entre abas)
+  // 3. query string   (?ref=... na URL atual)
+  // 4. hash           (#cadastro?ref=...)
+  var _refHash = '';
+  try {
+    var _hashParts = window.location.hash.split('?');
+    if (_hashParts.length > 1) {
+      _refHash = new URLSearchParams(_hashParts[1]).get('ref') || '';
+    }
+  } catch(e) {}
+
   const refCode = sessionStorage.getItem('ref_code') ||
-    new URLSearchParams(window.location.search).get('ref') || '';
+    (function(){ try { return localStorage.getItem('hw_ref_code') || ''; } catch(e){ return ''; } })() ||
+    new URLSearchParams(window.location.search).get('ref') ||
+    _refHash ||
+    '';
 
   el.innerHTML = `
     <style>
@@ -347,6 +363,7 @@ function renderCadastro(el) {
 
       await API.register(payload);
       sessionStorage.removeItem('ref_code');
+      try { localStorage.removeItem('hw_ref_code'); } catch(e) {}
       showToast('Conta criada com sucesso! Bem-vindo!', 'success');
       setTimeout(() => navigate('#painel'), 600);
     } catch (err) {

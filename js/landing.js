@@ -294,7 +294,10 @@ function renderLanding(el) {
   // Preencher ref via URL
   const urlParams = new URLSearchParams(window.location.search);
   const ref = urlParams.get('ref');
-  if (ref) sessionStorage.setItem('ref_code', ref);
+  if (ref) {
+    sessionStorage.setItem('ref_code', ref);
+    try { localStorage.setItem('hw_ref_code', ref); } catch(e) {}
+  }
 
   // ── Carregar config pública e aplicar regras ──────────────────────────────
   fetch('/api/public/config?_=' + Date.now())

@@ -1,3 +1,32 @@
+// ─── Captura global do código de indicação ────────────────────────────────────
+// Executado IMEDIATAMENTE ao carregar o script, antes de qualquer rota.
+// Lê ?ref= da URL (search) ou do hash (#cadastro?ref=10 / #landing&ref=10)
+// e persiste em localStorage + sessionStorage para sobreviver a navegações.
+(function captureRefCode() {
+  try {
+    var ref = '';
+
+    // 1. Tenta pelo query string principal: /?ref=10
+    var sp = new URLSearchParams(window.location.search);
+    ref = sp.get('ref') || '';
+
+    // 2. Tenta pelo hash: #cadastro?ref=10 ou #landing?ref=10
+    if (!ref && window.location.hash) {
+      var hashParts = window.location.hash.split('?');
+      if (hashParts.length > 1) {
+        var hashSp = new URLSearchParams(hashParts[1]);
+        ref = hashSp.get('ref') || '';
+      }
+    }
+
+    // 3. Persiste se encontrou
+    if (ref) {
+      localStorage.setItem('hw_ref_code', ref);
+      sessionStorage.setItem('ref_code', ref);
+    }
+  } catch (e) { /* ignora erros de storage privado */ }
+})();
+
 // ─── Config pública cacheada ──────────────────────────────────────────────────
 let _publicCfgCache = null;
 async function getPublicConfig(force = false) {
